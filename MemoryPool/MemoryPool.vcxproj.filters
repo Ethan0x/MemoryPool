@@ -18,6 +18,9 @@
     <ClCompile Include="test_mian.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MemoryPool.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MemoryBlock.h">
