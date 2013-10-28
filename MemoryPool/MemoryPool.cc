@@ -7,7 +7,7 @@
 
 namespace MemoryPool
 {
-	static const int FREED_MEMORY_CONTENT = 0xAA;	//Value for feed memory
+	static const int FREEED_MEMORY_CONTENT = 0xAA;	//Value for feed memory
 	static const int NEW_ALLOCATED_MEMORY_CONTENT = 0xFF;	//Initial value for new allocated memory
 
 	//
@@ -65,7 +65,7 @@ namespace MemoryPool
 		//Finally, a suitable Chunk was found.Adjust the Values of the internal "TotalSize"/"UsedSize" Members and the Values of the MemoryChunk itself.
 		m_sUsedMemoryPoolSize += sBestMemBlockSize;
 		m_sFreeMemoryPoolSize -= sBestMemBlockSize;
-		m_uiMemoryChunkCount++;
+		m_uiObjectCount++;
 		SetMemoryChunkValues(ptrChunk, sBestMemBlockSize);
 
 		return ((void*)ptrChunk->Data);
@@ -87,8 +87,8 @@ namespace MemoryPool
 		{
 			assert(false && "ERROR : Requested Pointer not in Memory Pool");
 		}
-		assert((m_uiMemoryChunkCount > 0) && "ERROR : Request to delete more Memory then allocated.");
-		m_uiMemoryChunkCount--;
+		assert((m_uiObjectCount > 0) && "ERROR : Request to delete more Memory then allocated.");
+		m_uiObjectCount--;
 	}
 
 	//
@@ -104,7 +104,7 @@ namespace MemoryPool
 		assert(((ptrNewMemBlock) && (ptrNewChunks)) && "Error : System ran out of Memory");
 
 		m_sTotalMemoryPoolSize += sBestMemBlockSize;	//adjust internal values
-		m_sFreeMemoryPoolSize -= sBestMemBlockSize;
+		m_sFreeMemoryPoolSize += sBestMemBlockSize;
 		m_uiMemoryChunkCount += uiNeedChunks;
 
 		if (m_bSetMemoryData)
@@ -149,12 +149,12 @@ namespace MemoryPool
 				//Step 1 : Set the allocated Memory to 'FREEED_MEMORY_CONTENT' (Note : This is fully Optional, but usefull for debugging)
 				if (m_bSetMemoryData)
 				{
-					memset(((void*)ptrCurrentChunk->Data), FREED_MEMORY_CONTENT, m_sMemoryChunkSize);
+					memset(((void*)ptrCurrentChunk->Data), FREEED_MEMORY_CONTENT, m_sMemoryChunkSize);
 				}
 				//Step 2 : Set the Used-Size to Zero
 				ptrCurrentChunk->UsedSize = 0;
 				//Step 3 : Adjust Memory-Pool Values and goto next Chunk
-				m_sFreeMemoryPoolSize -= m_sMemoryChunkSize;
+				m_sUsedMemoryPoolSize -= m_sMemoryChunkSize;
 				ptrCurrentChunk = ptrCurrentChunk->Next;
 			}
 		}
@@ -374,7 +374,7 @@ namespace MemoryPool
 		{
 			if (ptrChunk->IsAllocationChunk)
 			{
-				free((void*)(ptrChunk->Data));
+				free(((void*)(ptrChunk->Data)));
 			}
 			ptrChunk = ptrChunk->Next;
 		}
@@ -394,7 +394,7 @@ namespace MemoryPool
 			{
 				if (ptrChunkToDelete)
 				{
-					free((void*)ptrChunkToDelete);
+					free(((void*)ptrChunkToDelete));
 				}
 				ptrChunkToDelete = ptrChunk;
 			}

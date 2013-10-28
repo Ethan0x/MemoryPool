@@ -11,8 +11,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
+#include <time.h>
+
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #endif //_HEADERFILES_H_

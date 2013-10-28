@@ -6,12 +6,10 @@
 #include "HeaderFiles.h"
 #include "MemoryPool.h"
 
-#include <windows.h>
-#include <time.h>
-
 MemoryPool::MemoryPool *g_ptrMemPool = NULL;	//Global MemoryPool
-unsigned int TestCount = 500000;				//allocations 
-unsigned int ArraySize = 10000;					//size of the test array
+unsigned int TestCount = 50000000;				//allocations 
+unsigned int ArraySize = 100000;				//size of the test array
+
 
 class TestClass_OverLoad
 {
@@ -168,7 +166,7 @@ void TestAllocationSpeedArrayMemPool()
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cerr << "OK" << std::endl;
 
-	std::cerr << "Result for MemPool(Array-Test) : " << totaltime << " ms" << std::endl;
+	std::cerr << "Result for MemPool(Array-Test) : " << totaltime << " s" << std::endl;
 }
 
 //
@@ -189,7 +187,7 @@ void TestAllocationSpeedArrayHeap()
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cerr << "OK" << std::endl;
 
-	std::cerr << "Result for Heap(Array-Test)    : " << totaltime << " ms" << std::endl;
+	std::cerr << "Result for Heap(Array-Test)    : " << totaltime << " s" << std::endl;
 }
 
 //
@@ -214,8 +212,8 @@ int main(int argc, const char *argv[])
 	TestAllocationSpeedArrayMemPool();
 	TestAllocationSpeedArrayHeap();
 
-	TestAllocationSpeedClassMemPool();
-	TestAllocationSpeedClassHeap();
+	//TestAllocationSpeedClassMemPool();
+	//TestAllocationSpeedClassHeap();
 
 	WriteMemoryDumpToFile();
 

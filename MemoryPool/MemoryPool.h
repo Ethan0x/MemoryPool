@@ -12,7 +12,7 @@ namespace MemoryPool
 {
 	static const std::size_t DEFAULT_MEMORY_POOL_SIZE = 1000;									//Initial MemoryPool size in bytes
 	static const std::size_t DEFAULT_MEMORY_CHUNK_SIZE = 128;									//Default MemoryChunk size in bytes
-	static const std::size_t DEFAYLT_MEMORY_SIZE_TO_ALLOCATE = DEFAULT_MEMORY_CHUNK_SIZE * 2;	//Default minimal memory size to allocate
+	static const std::size_t DEFAULT_MEMORY_SIZE_TO_ALLOCATE = DEFAULT_MEMORY_CHUNK_SIZE * 2;	//Default minimal memory size to allocate
 
 	//class MemoryPool
 	//This class responsible for all MemoryRequests (GetMemory() / FreeMemory()) and manages the allocation of Memory from Operating-System
@@ -31,7 +31,7 @@ namespace MemoryPool
 		
 		MemoryPool(const std::size_t &sInitialMemoryPoolSize = DEFAULT_MEMORY_POOL_SIZE,
 			const std::size_t &sMemoryChunkSize = DEFAULT_MEMORY_CHUNK_SIZE,
-			const std::size_t &sMinimalMemorySizeToAllocate = DEFAYLT_MEMORY_SIZE_TO_ALLOCATE,
+			const std::size_t &sMinimalMemorySizeToAllocate = DEFAULT_MEMORY_SIZE_TO_ALLOCATE,
 			bool bSetMemoryData = false);
 		
 		//Destructor
@@ -89,7 +89,7 @@ namespace MemoryPool
 		std::size_t m_sFreeMemoryPoolSize;  //amount of free Memory in Bytes
 
 		std::size_t m_sMemoryChunkSize;     //amount of Memory which can be Managed by a single MemoryChunk.
-		unsigned int m_uiMemoryChunkCount;  //Total amount of "SMemoryChunk"-Objects in the Memory-Pool.
+		unsigned int m_uiMemoryChunkCount;  //Total amount of "MemoryChunk"-Objects in the Memory-Pool.
 		unsigned int m_uiObjectCount;       //Counter for "GetMemory()" / "FreeMemory()"-Operation. Counts (indirectly) the number of "Objects" inside the mem-Pool.
 
 		bool m_bSetMemoryData;                      //Set to "true", if you want to set all (de)allocated Memory to a predefined Value (via "memset()"). Usefull for debugging.
